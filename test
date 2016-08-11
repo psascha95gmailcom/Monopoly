@@ -1,16 +1,44 @@
-renderSpielbrettOn: html
+renderLinkeSpalteOn: html
 
-	(html heading)
-		level: 2;
-		class: 'clear';
-		with: 'Spielbrett'
+	| kantenlaenge |
+	kantenlaenge := self model spielbrettGroesse // 4.
 	(html div)
-		id: 'spielfeld';
+		class: 'spalte';
 		with: 
-				[self renderKopfzeileOn: html.
-				html div class: 'clear'.
-				self renderLinkeSpalteOn: html.
-				self renderMittelfeldOn: html.
-				self renderRechteSpalteOn: html.
-				html div class: 'clear'.
-				self renderFusszeileOn: html]
+				[self model spielbrettGroesse to: self model spielbrettGroesse - (kantenlaenge - 2)
+					by: -1
+					do: 
+						[:i |
+						(html div)
+							class: (self model feldAnPosition: i) class name asLowercase;
+							class: 'waagerecht';
+							with: 
+									[(html div)
+										class: 'text';
+										class: 'feld';
+										with:  [html paragraph: (self model feldnameAnPosition: i)]]]]
+										
+renderMittelfeldOn: html
+
+	(html div)
+		class: 'mitte';
+		with: [html div class: 'mittelfeld'; with: 'Monopoly']
+		
+renderRechteSpalteOn: html
+
+	| kantenlaenge |
+	kantenlaenge := self model spielbrettGroesse // 4.
+	(html div)
+		class: 'spalte';
+		with: 
+				[kantenlaenge + 2 to: 2 * kantenlaenge
+					do: 
+						[:i |
+						(html div)
+							class: (self model feldAnPosition: i) class name asLowercase;
+							class: 'waagerecht';
+							with: 
+									[(html div)
+										class: 'text';
+										class: 'feld';
+										with: [html paragraph: (self model feldnameAnPosition: i)]]]]
