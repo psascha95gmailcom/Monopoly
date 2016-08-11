@@ -1,0 +1,16 @@
+renderSpielbrettOn: html
+
+	(html heading)
+		level: 2;
+		class: 'clear';
+		with: 'Spielbrett'
+	(html div)
+		id: 'spielfeld';
+		with: 
+				[self renderKopfzeileOn: html.
+				html div class: 'clear'.
+				self renderLinkeSpalteOn: html.
+				self renderMittelfeldOn: html.
+				self renderRechteSpalteOn: html.
+				html div class: 'clear'.
+				self renderFusszeileOn: html]
